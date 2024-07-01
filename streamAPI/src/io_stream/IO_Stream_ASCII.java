@@ -11,6 +11,7 @@ public class IO_Stream_ASCII {
 
 	 public static void main(String[] args) throws IOException {
 	        InputStream fileInputStream = new FileInputStream("src/io_stream/MyFileASCII");
+	        
 
 	        Reader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.US_ASCII);
 
