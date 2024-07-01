@@ -14,7 +14,7 @@ public class IO_Stream_Ex_2 {
 		int fileData2 = inputStreamReader2.read();
 		System.out.println("\nFile-1 Data...\n");
 		while (fileData2 != -1) {
-			System.out.println("fileData Ascii : " + fileData2 + ", filedata char : " + (char) fileData2);
+			System.out.println("fileData encode value : " + fileData2 + ", filedata char : " + (char) fileData2);
 			fileData2 = inputStreamReader2.read();
 		}
 	}
