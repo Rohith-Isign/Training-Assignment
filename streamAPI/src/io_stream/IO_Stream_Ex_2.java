@@ -10,7 +10,7 @@ import java.nio.charset.Charset;
 public class IO_Stream_Ex_2 {
 	public static void main(String[] args) throws IOException {
 		InputStream fileInputStream2 = new FileInputStream("src/io_stream/myFile2");
-		Reader inputStreamReader2 = new InputStreamReader(fileInputStream2, Charset.forName("UTF-16"));
+		Reader inputStreamReader2 = new InputStreamReader(fileInputStream2, Charset.forName("UTF-8"));
 		int fileData2 = inputStreamReader2.read();
 		System.out.println("\nFile-1 Data...\n");
 		while (fileData2 != -1) {
