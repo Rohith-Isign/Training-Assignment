@@ -24,11 +24,11 @@ public class MySecurityConfig {
 	@Autowired
 	HttpSecurity httpSecurity;
 
-	@Bean
-	public InMemoryUserDetailsManager setUpUsers() {
-		UserDetails user1 = User.withUsername("Rohith").password("rohith").roles("admin", "user").build();
-		return new InMemoryUserDetailsManager(user1);
-	}
+//	@Bean
+//	public InMemoryUserDetailsManager setUpUsers() {
+//		UserDetails user1 = User.withUsername("Rohith").password("rohith").roles("admin", "user").build();
+//		return new InMemoryUserDetailsManager(user1);
+//	}
 
 	@Bean
 	PasswordEncoder passwordEncoder() {
@@ -49,7 +49,7 @@ public class MySecurityConfig {
 	                      .requestMatchers("/process-registration").permitAll()
 	                      .anyRequest().authenticated();
 	        });
-	    httpSecurity.csrf(Customizer.withDefaults());
+	    httpSecurity.csrf().disable();
 	    httpSecurity.httpBasic(Customizer.withDefaults());
 		httpSecurity.formLogin(Customizer.withDefaults());
 		
@@ -61,53 +61,28 @@ public class MySecurityConfig {
 		return new HandlerMappingIntrospector();
 	}
 	
+
 	
+	@Bean
+	public DriverManagerDataSource dataSource() {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/employee_isigntech");
+		dataSource.setUsername("root");
+		dataSource.setPassword("root");
+		return dataSource;
+	}
 	
+	@Bean
+	public JdbcTemplate jdbcTemplate() {
+		return new JdbcTemplate(dataSource());
+	}
+
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	@Bean
-//	public DriverManagerDataSource dataSource() {
-//		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-//		dataSource.setUrl("jdbc:mysql://localhost:3306/employee_isigntech");
-//		dataSource.setUsername("root");
-//		dataSource.setPassword("Rohithsmv369");
-//		return dataSource;
-//	}
-//	
-//	@Bean
-//	public JdbcTemplate jdbcTemplate() {
-//		return new JdbcTemplate(dataSource());
-//	}
-//
-//	
-//	@Bean
-//	public JdbcUserDetailsManager jdbcUserDetailsManager() {
-//		return new JdbcUserDetailsManager(dataSource());
-//	}
+	@Bean
+	public JdbcUserDetailsManager jdbcUserDetailsManager() {
+		return new JdbcUserDetailsManager(dataSource());
+	}
 
 
 	

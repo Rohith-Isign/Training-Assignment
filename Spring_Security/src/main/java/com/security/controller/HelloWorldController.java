@@ -22,15 +22,15 @@ import com.security.dto.UserDto;
 @RestController
 public class HelloWorldController {
 	
-//	private JdbcUserDetailsManager jdbcUserDetailsManager;
-//	private PasswordEncoder passwordEncoder;
-//	private UserDetailsImpl userDetailsImpl;
-//	
-//	public HelloWorldController(JdbcUserDetailsManager jdbcUserDetailsManager,PasswordEncoder passwordEncoder,UserDetailsImpl userDetailsImpl) {
-//		this.passwordEncoder=passwordEncoder;
-//		this.jdbcUserDetailsManager=jdbcUserDetailsManager;
-//		this.userDetailsImpl=userDetailsImpl;
-//	}
+	private JdbcUserDetailsManager jdbcUserDetailsManager;
+	private PasswordEncoder passwordEncoder;
+
+	
+	public HelloWorldController(JdbcUserDetailsManager jdbcUserDetailsManager,PasswordEncoder passwordEncoder) {
+		this.passwordEncoder=passwordEncoder;
+		this.jdbcUserDetailsManager=jdbcUserDetailsManager;
+
+	}
 	
 	@GetMapping("/helloworld")
 	public String helloWorld(Authentication authentication) {
@@ -46,11 +46,12 @@ public class HelloWorldController {
 		return "Hello from Spring security";
 	}
 	
-//	@PostMapping(value = "/process-registration",consumes = "application/json" )
-//	public String processRegistration(@RequestBody UserDto user) {
-//		
-//		String encodedPassword=passwordEncoder.encode(user.getPassword());
-//		UserDetails appUser=User.withUsername(user.getName()).password(encodedPassword).roles(user.getRole()).build();
-//		return "Registration successfull for the user "+user.getName();
-//	}
+	@PostMapping(value = "/process-registration",consumes = "application/json" )
+	public String processRegistration(@RequestBody UserDto user) {
+		
+		String encodedPassword=passwordEncoder.encode(user.getPassword());
+		UserDetails appUser=User.withUsername(user.getUsername()).password(encodedPassword).roles(user.getAuthority()).build();
+		jdbcUserDetailsManager.createUser(appUser);
+		return "Registration successfull for the user "+user.getUsername();
+	}
 }
